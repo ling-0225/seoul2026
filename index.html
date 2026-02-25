@@ -1182,6 +1182,85 @@
 
     // Init
     bindChecklist();
+
+        // ===== 加入 Edit / Save 外掛功能 =====
+    const EDIT_STORE_KEY = "seoul2026_edits_v1";
+    let isEditing = false;
+
+    // 1. 自動抓取所有可編輯的文字（時間、標題、備註），並給予唯一 ID
+    const editables = document.querySelectorAll('.time-badge, .flex-1 .font-bold, .flex-1 .text-sm, .flex-1 .text-xs');
+    editables.forEach((el, index) => {
+      // 避開按鈕或連結，以免版面跑版
+      if(el.tagName === 'A' || el.tagName === 'BUTTON') return;
+      el.dataset.editId = "edit_node_" + index;
+    });
+
+    // 2. 啟動時：從瀏覽器讀取之前儲存的修改
+    function loadEdits() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(EDIT_STORE_KEY) || "{}");
+        editables.forEach(el => {
+          if (el.dataset.editId && saved[el.dataset.editId]) {
+            el.innerHTML = saved[el.dataset.editId];
+          }
+        });
+      } catch (e) { console.error("無法讀取修改紀錄"); }
+    }
+
+    // 3. 切換編輯模式與儲存
+    function toggleEditMode() {
+      isEditing = !isEditing;
+      const btn = document.getElementById('edit-toggle-btn');
+      
+      if (isEditing) {
+        // 進入編輯模式
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> 儲存修改';
+        btn.classList.replace('bg-white/20', 'bg-red-500');
+        
+        editables.forEach(el => {
+          if (!el.dataset.editId) return;
+          el.contentEditable = "true";
+          el.style.border = "1px dashed #ff4d4d"; // 加個紅虛線框讓你知道哪裡可以改
+          el.style.padding = "2px";
+          el.style.borderRadius = "4px";
+          el.style.minHeight = "1em";
+        });
+        toast("進入編輯模式：請點擊紅框文字進行修改");
+      } else {
+        // 儲存並退出編輯模式
+        btn.innerHTML = '<i class="fa-solid fa-pen"></i> 編輯行程';
+        btn.classList.replace('bg-red-500', 'bg-white/20');
+        
+        const editsToSave = {};
+        editables.forEach(el => {
+          if (!el.dataset.editId) return;
+          el.contentEditable = "false";
+          el.style.border = "none";
+          el.style.padding = "0";
+          editsToSave[el.dataset.editId] = el.innerHTML;
+        });
+        
+        localStorage.setItem(EDIT_STORE_KEY, JSON.stringify(editsToSave));
+        toast("修改已成功儲存在本機！");
+      }
+    }
+
+    // 4. 在畫面右上角自動生成一顆「編輯按鈕」
+    const headerDiv = document.querySelector('header .text-right');
+    if (headerDiv) {
+      const editBtn = document.createElement('button');
+      editBtn.id = 'edit-toggle-btn';
+      editBtn.className = 'bg-white/20 text-white text-xs px-2 py-1 rounded mt-2 ml-2 transition-colors';
+      editBtn.innerHTML = '<i class="fa-solid fa-pen"></i> 編輯行程';
+      editBtn.onclick = toggleEditMode;
+      headerDiv.appendChild(editBtn);
+    }
+
+    // 執行讀取
+    loadEdits();
+    // =====================================
+
+    
   </script>
 </body>
 </html>
