@@ -1,1063 +1,991 @@
 <!DOCTYPE html>
+
 <html lang="zh-HK">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Seoul 2026 完整行程表</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Seoul 2026 完整行程表</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+<style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f4f7f6; }
     .tab-active { border-bottom: 3px solid #ff4d4d; color: #ff4d4d; font-weight: 800; }
     .day-card { display: none; }
     .day-card.active { display: block; }
     .sticky-tabs { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
-    .map-btn { background: #2563eb; color: white; padding: 6px 12px; border-radius: 999px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 4px rgba(37,99,235,0.2); }
-    .copy-btn { background: #f3f4f6; color: #374151; border: 1px solid #d1d5db; padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
-    .pill { font-size: .75rem; padding: 3px 10px; border-radius: 999px; background: #eef2ff; color: #4f46e5; font-weight: 600; border: 1px solid #c7d2fe; }
+    .map-btn { background: #03C75A; color: white; padding: 6px 12px; border-radius: 999px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; text-decoration: none; }
+    .copy-btn { background: #111827; color: white; padding: 6px 12px; border-radius: 999px; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; border: none; }
+    .pill { font-size: .72rem; padding: 3px 10px; border-radius: 999px; background: #eef2ff; color: #3730a3; display: inline-block; }
     .muted { color: #6b7280; }
-    .check { width: 24px; height: 24px; accent-color: #ff4d4d; cursor: pointer; }
-    .done { opacity: .55; text-decoration: line-through; filter: grayscale(0.5); }
-    .card { background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.02); }
+    .check { width: 20px; height: 20px; accent-color: #ff4d4d; cursor: pointer; }
+    .done { opacity: .55; text-decoration: line-through; }
+    .card { background: white; border-radius: 16px; box-shadow: 0 6px 18px rgba(0,0,0,0.06); }
     .mini { font-size: .85rem; }
-    .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: #f3f4f6; border-radius: 6px; padding: 2px 6px; font-size: 0.75rem; border: 1px solid #e5e7eb; }
+    .kbd { font-family: ui-monospace, Menlo, monospace; background: #f3f4f6; border-radius: 6px; padding: 2px 6px; font-size: 0.8rem; }
+    .itinerary-item { transition: opacity 0.2s; }
   </style>
 </head>
-
-<body class="pb-28">
-
-  <!-- Header -->
-  <header class="bg-gradient-to-r from-slate-900 to-slate-800 text-white px-5 py-6 rounded-b-3xl shadow-md">
-    <div class="max-w-4xl mx-auto">
-      <div class="flex items-start justify-between gap-3">
-        <div>
-          <h1 class="text-2xl font-extrabold tracking-wide drop-shadow-sm">SEOUL 2026</h1>
-          <p class="text-sm opacity-90 mt-1 font-medium">3/7 - 3/14 | UO618 → UO631</p>
-        </div>
-        <div class="text-right text-xs opacity-90 flex flex-col items-end gap-2">
-          <div class="bg-white/20 px-2 py-1 rounded-md inline-flex items-center gap-2 backdrop-blur-sm">
-            <i class="fa-solid fa-heart text-red-400"></i> two-person trip
+<body class="pb-24">
+<!-- Header -->
+<header class="bg-gradient-to-r from-slate-900 to-slate-700 text-white px-4 py-4">
+<div class="max-w-4xl mx-auto">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h1 class="text-2xl font-extrabold tracking-wide">SEOUL 2026 ✈️</h1>
+<p class="text-sm opacity-90 mt-1">3月7日 - 3月14日 | 8天7夜完整行程</p>
+</div>
+<div class="text-right text-xs opacity-90">
+<div class="pill bg-white/20 text-white"><i class="fa-solid fa-heart"></i> Two-person Trip</div>
+<div class="mt-2">UO618 → UO631</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Quick Dashboard -->
+<section class="max-w-4xl mx-auto px-4 mt-4 space-y-4">
+<div class="card p-4">
+<div class="flex items-center justify-between gap-3 mb-3">
+<h2 class="font-extrabold text-lg">快速資訊</h2>
+<button class="copy-btn" onclick="resetAll()"><i class="fa-solid fa-rotate"></i> 清除勾選</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+<div class="rounded-xl border border-gray-200 p-3">
+<div class="flex items-center justify-between mb-2">
+<div class="font-bold mini"><i class="fa-solid fa-plane-departure mr-2 text-blue-600"></i>去程</div>
+<span class="pill">UO618</span>
+</div>
+<div class="text-sm">3/7 (六) 07:10 → 11:40</div>
+<div class="text-xs muted mt-1">Gate 35 AE Lounge</div>
+</div>
+<div class="rounded-xl border border-gray-200 p-3">
+<div class="flex items-center justify-between mb-2">
+<div class="font-bold mini"><i class="fa-solid fa-plane-arrival mr-2 text-green-600"></i>回程</div>
+<span class="pill">UO631</span>
+</div>
+<div class="text-sm">3/14 (六) 15:45 起飛</div>
+<div class="text-xs muted mt-1">12:30 前必須到機場</div>
+</div>
+<div class="rounded-xl border border-gray-200 p-3 sm:col-span-2">
+<div class="flex items-center justify-between gap-2 mb-2">
+<div class="font-bold mini"><i class="fa-solid fa-house mr-2 text-purple-600"></i>住宿（弘大）</div>
+<a class="map-btn" href="https://map.naver.com/p/search/마젤란21오피스텔 마포" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+<div class="rounded-lg bg-gray-50 p-3">
+<div class="text-xs muted mb-1">英文地址（填表用）</div>
+<div class="text-sm font-semibold" id="addr_en">Magellan 21 Officetel, 175 Yanghwa-ro, Mapo-gu, Seoul 03994</div>
+<button class="copy-btn mt-2" onclick="copyText('addr_en')"><i class="fa-regular fa-copy"></i> Copy</button>
+</div>
+<div class="rounded-lg bg-gray-50 p-3">
+<div class="text-xs muted mb-1">韓文地址（給司機）</div>
+<div class="text-sm font-semibold" id="addr_kr">서울시 마포구 동교동 156-2 마젤란 21 오피스텔 (우 03994)</div>
+<button class="copy-btn mt-2" onclick="copyText('addr_kr')"><i class="fa-regular fa-copy"></i> Copy</button>
+</div>
+</div>
+<div class="text-xs muted mt-2">
+<i class="fa-solid fa-info-circle mr-1"></i>
+            Hongdae Exit 2、Room 606、SHA (+82 010 5061 0876)
           </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Quick Dashboard -->
-  <section class="max-w-4xl mx-auto px-4 mt-6 space-y-5">
-    <div class="card p-5">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="font-extrabold text-lg text-slate-800">快速資訊 Dashboard</h2>
-        <button class="text-xs bg-red-50 text-red-600 px-3 py-1.5 rounded-lg font-bold hover:bg-red-100 transition-colors" onclick="resetAll()">
-          <i class="fa-solid fa-rotate-left mr-1"></i> 清除進度
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="rounded-xl border border-gray-200 p-3 bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <div class="font-bold mini"><i class="fa-solid fa-plane-departure mr-2 text-blue-600"></i>去程</div>
-            <span class="pill">UO618</span>
-          </div>
-          <div class="text-sm font-semibold">3/7 (六) 07:10 → 11:40</div>
-          <div class="text-xs muted mt-1">Gate 35 AE Lounge</div>
-        </div>
-
-        <div class="rounded-xl border border-gray-200 p-3 bg-slate-50/50">
-          <div class="flex items-center justify-between mb-2">
-            <div class="font-bold mini"><i class="fa-solid fa-plane-arrival mr-2 text-green-600"></i>回程</div>
-            <span class="pill">UO631</span>
-          </div>
-          <div class="text-sm font-semibold">3/14 (六) 15:45 起飛</div>
-          <div class="text-xs muted mt-1">12:30 前必須到機場</div>
-        </div>
-
-        <div class="rounded-xl border border-gray-200 p-4 sm:col-span-2 shadow-sm">
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <div class="font-bold text-base"><i class="fa-solid fa-house mr-2 text-purple-600"></i>住宿：Magellan 21 (弘大 Exit 2)</div>
-            <a class="map-btn" target="_blank"
-               href="https://www.google.com/maps/search/?api=1&query=Magellan+21+Officetel+175+Yanghwa-ro+Mapo-gu+Seoul">
-              <i class="fa-solid fa-map"></i> 地圖
-            </a>
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div class="rounded-lg bg-gray-50 p-3 border border-gray-100">
-              <div class="flex justify-between items-start mb-1">
-                <div class="text-xs muted font-bold">英文地址（填表用）</div>
-                <button class="text-xs text-blue-600 font-bold" onclick="copyText('addr_en')">複製</button>
+</div>
+</div>
+</div>
+<div class="card p-4">
+<div class="flex items-center justify-between gap-2 mb-3">
+<h2 class="font-extrabold text-base">搜尋行程</h2>
+<span class="pill">輸入關鍵字快速定位</span>
+</div>
+<input class="w-full border rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" id="searchBox" oninput="applySearch()" placeholder="搜尋：望遠市場 / 退稅 / Bagel / Pop-up / Color of you ..."/>
+</div>
+</section>
+<!-- Tabs Navigation -->
+<div class="sticky-tabs mt-4">
+<div class="max-w-4xl mx-auto overflow-x-auto whitespace-nowrap px-2 py-3 flex gap-3 text-sm">
+<button class="tab tab-active px-3 py-1" data-target="day1">Day 1</button>
+<button class="tab px-3 py-1" data-target="day2">Day 2</button>
+<button class="tab px-3 py-1" data-target="day3">Day 3</button>
+<button class="tab px-3 py-1" data-target="day4">Day 4</button>
+<button class="tab px-3 py-1" data-target="day5">Day 5</button>
+<button class="tab px-3 py-1" data-target="day6">Day 6</button>
+<button class="tab px-3 py-1" data-target="day7">Day 7</button>
+<button class="tab px-3 py-1" data-target="day8">Day 8</button>
+<button class="tab px-3 py-1" data-target="notes">Notes</button>
+</div>
+</div>
+<!-- Content -->
+<main class="max-w-4xl mx-auto px-4 mt-4 space-y-6 pb-8">
+<!-- Day 1 -->
+<section class="day-card active" id="day1">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 1 · 7/3 (六) 弘大 + 望遠市場</h2>
+<p class="text-sm muted mt-1">抵達日 | 機場 → 弘大 Check-in → 望遠市場 → Color of you → 晚餐購物</p>
+</div>
+<span class="pill">抵達</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="出門 香港機場">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d1-0330" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">03:30 出門</div>
+<div class="text-xs muted">預留交通時間前往機場</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="AE Lounge Gate 35">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d1-0430" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">04:30 到 HK 機場 + Depart</div>
+<div class="text-sm mt-1">Gate 35 AE Lounge</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-600 itinerary-item" data-keywords="UO618 航班 HKG ICN">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d1-flight" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">07:10–11:40 航班 UO618</div>
+<div class="text-sm mt-1">HKG → ICN (仁川機場 T1)</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="SES 出境 氣候同行卡 SK Roaming Center">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d1-arrival" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">11:40–13:00 抵達 + 出境手續</div>
+<div class="text-sm mt-2 space-y-1">
+<div>✅ SES 自助出入境安檢登記（T1 3/F 出境大堂 H 區旁）</div>
+<div>✅ 買氣候同行卡（T1 1/F 西側服務台，面對 13 號出口 SK Roaming Center，06:00-22:00）</div>
+<div>✅ <span class="font-semibold text-indigo-700">領取 WOWPASS 機場組合</span>（同一個 SK 櫃檯）：領實體卡 + 開通 SIM 卡，附韓國 +82 門號，用來排名店號碼牌</div>
+<div>✅ <span class="font-semibold text-indigo-700">領取 WOWPASS 機場組合</span>（同一個 SK 櫃檯）：領實體卡 + 開通 SIM 卡，附韓國 +82 門號，用來排名店號碼牌</div>
+</div>
+<div class="text-xs muted mt-2 bg-yellow-50 p-2 rounded">
+<i class="fa-solid fa-exclamation-circle mr-1"></i>
+                提醒：氣候同行卡一般不能從仁川機場站上車進市區（回程下車規則另計）
               </div>
-              <div class="text-sm font-medium text-gray-800" id="addr_en">Magellan 21 Officetel, 175 Yanghwa-ro, Mapo-gu, Seoul 03994</div>
-            </div>
-            <div class="rounded-lg bg-gray-50 p-3 border border-gray-100">
-              <div class="flex justify-between items-start mb-1">
-                <div class="text-xs muted font-bold">韓文地址（給司機）</div>
-                <button class="text-xs text-blue-600 font-bold" onclick="copyText('addr_kr')">複製</button>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-sky-500 itinerary-item" data-keywords="Bus 6002 地鐵 MTR 進市區">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d1-transit" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">13:00–14:00 進市區</div>
+<div class="text-sm mt-1">MTR / Bus 6002</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-600 itinerary-item" data-keywords="弘大 Check-in Hongdae Exit 2 wowpass">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d1-checkin" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">14:00–14:30 弘大 Check-in</div>
+<div class="text-sm mt-1 muted">Hongdae Exit 2、Room 606、SHA (+82 010 5061 0876)、3號 locker 貴</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/홍대입구역 2번출구" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-600 itinerary-item" data-keywords="wowpass 儲值 uber">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d1-wowpass" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">14:30–15:00 Wowpass + Uber 儲值</div>
+<div class="text-sm mt-1 space-y-1">
+<div>Exit 2 找橘色機台 → 插外幣現金 → 儲值 WOWPASS（變成韓國簽帳卡）</div>
+<div class="text-xs text-indigo-600 font-semibold">📱 確認 WOWPASS SIM 卡門號已可收訊</div>
+<div>Uber 充值 5,500 won</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="望遠市場 Mangwon Market 勳勳糖餅 雨耳樂 木謹花魚糕 Ugly Bakery">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d1-mangwon" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">15:00–17:00 午餐：望遠市場</div>
+<div class="text-sm mt-2">
+                🍴 勳勳糖餅 훈훈호떡、雨耳樂、年糕排骨、可樂餅<br/>
+                🐟 木謹花魚糕 (Kim ma li 紫菜卷)、魚糕對面烤鰻魚（可單買）<br/>
+                🥖 Ugly Bakery / Brick Bagel
               </div>
-              <div class="text-sm font-medium text-gray-800" id="addr_kr">서울시 마포구 동교동 156-2 마젤란 21 오피스텔 (우 03994)</div>
-            </div>
-          </div>
-          <div class="text-xs muted mt-3 bg-yellow-50 p-2 rounded-md border border-yellow-100">
-            <i class="fa-solid fa-circle-info text-yellow-500 mr-1"></i> 備註：Room 606｜SHA (+82 010 5061 0876)｜3號 locker 貴
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Search Box -->
-    <div class="card p-4">
-      <div class="flex items-center gap-3 bg-gray-50 rounded-xl px-3 py-2 border border-gray-200 focus-within:border-blue-400 focus-within:ring-2 focus-within:ring-blue-100 transition-all">
-        <i class="fa-solid fa-magnifying-glass text-gray-400"></i>
-        <input id="searchBox" class="w-full bg-transparent text-sm outline-none"
-               placeholder="搜尋當日行程：退稅 / Bagel / Pop-up / 餐廳..."
-               oninput="applySearch()" />
-      </div>
-    </div>
-  </section>
-
-  <!-- Tabs Navigation -->
-  <div class="sticky-tabs mt-4">
-    <div class="max-w-4xl mx-auto overflow-x-auto whitespace-nowrap px-2 py-3 flex gap-3 text-sm">
-      <button class="tab tab-active px-3 py-1" data-target="day1">Day 1</button>
-      <button class="tab px-3 py-1" data-target="day2">Day 2</button>
-      <button class="tab px-3 py-1" data-target="day3">Day 3</button>
-      <button class="tab px-3 py-1" data-target="day4">Day 4</button>
-      <button class="tab px-3 py-1" data-target="day5">Day 5</button>
-      <button class="tab px-3 py-1" data-target="day6">Day 6</button>
-      <button class="tab px-3 py-1" data-target="day7">Day 7</button>
-      <button class="tab px-3 py-1" data-target="day8">Day 8</button>
-      <button class="tab px-3 py-1 text-indigo-600 font-bold bg-indigo-50 rounded-full" data-target="day9"><i class="fa-solid fa-book mr-1"></i> Notes</button>
-    </div>
-  </div>
-
-  <!-- Content -->
-  <main class="max-w-4xl mx-auto px-4 mt-6 space-y-6">
-
-    <!-- ==================== DAY 1 ==================== -->
-    <section class="day-card active" id="day1">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-red-50 to-white border-l-4 border-red-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 1 · 7/3 (六) 弘大 + 望遠市場</h2>
-            <p class="text-sm muted mt-1">抵達日 | 機場 → 弘大 Check-in → 望遠市場 → Color of you → 晚餐購物</p>
-          </div>
-          <span class="pill bg-red-100 text-red-700 border-red-200">抵達</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="出門 香港機場">
-          <div class="flex items-center gap-3">
-            <input class="check" type="checkbox" data-id="d1-0330" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">03:30 出門</div>
-              <div class="text-xs muted mt-1">預留交通時間前往機場</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="AE Lounge Gate 35">
-          <div class="flex items-center gap-3">
-            <input class="check" type="checkbox" data-id="d1-0430" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">04:30 到 HK 機場 + Depart</div>
-              <div class="text-sm mt-1 text-gray-700">Gate 35 AE Lounge</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-600 itinerary-item" data-keywords="UO618 航班 HKG ICN">
-          <div class="flex items-center gap-3">
-            <input class="check" type="checkbox" data-id="d1-flight" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">07:10–11:40 航班 UO618</div>
-              <div class="text-sm mt-1 text-gray-700">HKG → ICN (仁川機場 T1)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="SES 出境 氣候同行卡 SK Roaming Center">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d1-arrival" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">11:40–13:00 抵達 + 出境手續</div>
-              <div class="text-sm mt-2 space-y-1">
-                <div>✅ SES 自助出入境安檢登記（T1 3/F 出境大堂 H 區旁）</div>
-                <div>✅ 買氣候同行卡（T1 1/F 西側服務台，面對 13 號出口 SK Roaming Center，06:00-22:00）</div>
-                <div>✅ <span class="font-semibold text-indigo-700">領取 WOWPASS 機場組合</span>（同一個 SK 櫃檯）：領實體卡 + 開通 SIM 卡，附韓國 +82 門號，用來排名店號碼牌</div>
-              </div>
-              <div class="text-xs muted mt-2 bg-yellow-50 p-2 rounded">
-                <i class="fa-solid fa-exclamation-circle mr-1"></i>提醒：氣候同行卡一般不能從仁川機場站上車進市區（回程下車規則另計）
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-sky-500 itinerary-item" data-keywords="Bus 6002 地鐵 MTR 進市區">
-          <div class="flex items-center gap-3">
-            <input class="check" type="checkbox" data-id="d1-transit" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">13:00–14:00 進市區</div>
-              <div class="text-sm mt-1 text-gray-700">MTR / Bus 6002</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-600 itinerary-item" data-keywords="弘大 Check-in Hongdae Exit 2 wowpass">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d1-checkin" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">14:00–14:30 弘大 Check-in</div>
-              <div class="text-sm mt-1 muted">Hongdae Exit 2、Room 606、SHA (+82 010 5061 0876)、3號 locker 貴</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Hongdae+Station+Exit+2">
-                <i class="fa-solid fa-map"></i> Exit 2 地圖
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/망원시장" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-violet-500 itinerary-item" data-keywords="Color of you 色彩鑑定 弘大 預約 T1 Base Camp">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d1-color" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">18:00–19:30 Color of You（已預約 18:00）</div>
+<div class="text-sm mt-1 muted">SHW / T1 Base Camp 亦在附近</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/컬러오브유 홍대" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-green-500 itinerary-item" data-keywords="豬腳小姐 미쓰족발 雪冰 Sulbing 晚餐">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d1-dinner" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">20:00–21:00 晚餐：豬腳小姐 미쓰족발</div>
+<div class="text-sm mt-1">甜品：雪冰 Sulbing 설빙</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/미쓰족발 홍대본점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="弘大 Shopping SPAO Olive Young Daiso 發熱衣">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d1-shop" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">21:00–22:00 弘大 Shopping</div>
+<div class="text-sm mt-1">SPAO (close 22pm) / Olive Young (close 23pm) / Daiso 發熱衣 (close 22pm)</div>
+<a class="map-btn mt-2 inline-flex" href="https://map.naver.com/p/search/올리브영 홍대타운" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a></div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-yellow-500 itinerary-item" data-keywords="橋村炸雞 교촌치킨 BHC 蜂蜜無骨 宵夜">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d1-chicken" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">22:15–23:00 宵夜：橋村炸雞 / BHC</div>
+<div class="text-sm mt-1">蜂蜜無骨 허니순살 / 芝士粉 / 醬油炸雞</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/교촌치킨 홍대점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Day 2 -->
+<section class="day-card" id="day2">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 2 · 8/3 (日) 延南洞 + 弘大</h2>
+<p class="text-sm muted mt-1">早餐 → CAMELLO → AK Plaza → 弘大商圈 → 鳳山精肉晚餐</p>
+</div>
+<span class="pill">吃 + 逛</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Isaac toast 早餐 Zero store 延南洞">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d2-breakfast" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">09:00–10:00 早餐：Isaac Toast / Zero Store</div>
+<div class="text-sm mt-1 muted">延南洞區域</div>
+<a class="map-btn mt-2" href="https://naver.me/G58gJTbY" target="_blank">
+<i class="fa-solid fa-map"></i> Isaac Toast
               </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-600 itinerary-item" data-keywords="wowpass 儲值 uber">
-          <div class="flex items-center gap-3">
-            <input class="check" type="checkbox" data-id="d1-wowpass" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">14:30–15:00 Wowpass 儲值 + Uber</div>
-              <div class="text-sm mt-1 space-y-1">
-                <div>Exit 2 找橘色機台 → 插外幣現金 → 儲值 WOWPASS（變成韓國簽帳卡）</div>
-                <div class="text-xs text-indigo-600 font-semibold">📱 確認 WOWPASS SIM 卡門號已可收訊</div>
-                <div>Uber 充值 5,500 won</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="望遠市場 Mangwon Market 勳勳糖餅 雨耳樂 木謹花魚糕 Ugly Bakery BrickBagel">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d1-mangwon" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">15:00–17:00 望遠市場（午餐）</div>
-              <div class="text-sm mt-2 text-gray-700 leading-relaxed space-y-1">
-                <div>🍴 勳勳糖餅 훈훈호떡</div>
-                <div>🍴 雨耳樂, 年糕排骨, 可樂餅</div>
-                <div>🍴 木謹花魚糕 (Kim ma li 紫菜卷)</div>
-                <div>🍴 魚糕對面有烤鰻魚 (單買)</div>
-                <div>🧁 Ugly Bakery / BrickBagel</div>
-              </div>
-              <a class="map-btn mt-3" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Mangwon+Market">
-                <i class="fa-solid fa-map"></i> 望遠市場地圖
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="AK Plaza animate 動漫 Waffle Shop 退稅">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d2-akplaza" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">10:30–11:30 AK Plaza（動漫聖地）</div>
+<div class="text-sm mt-1">5F：Animate、高達、一番賞 | 地下：Waffle Shop</div>
+<div class="text-xs muted mt-1">✅ 可退稅</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="CAMELLO yeonnam 義大利麵 排隊 walk in">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d2-camello" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">12:00–13:00 午餐：CAMELLO yeonnam（義大利麵）</div>
+<div class="text-sm mt-1 bg-yellow-50 p-2 rounded">⚠️ Walk in only，需開門前到達排隊</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/카멜로연남" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="Mandong Bakery 蒜蓉包 公明咖啡廳">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d2-bakery" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">13:00–14:00 甜點時間</div>
+<div class="text-sm mt-1">Mandong Bakery 蒜蓉包 / 公明咖啡廳</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/만동제과 연남" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="弘大 Shopping MIXXO I AM JOY KT&amp;G 退稅">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d2-shopping" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">14:30–15:30 弘大商圈 Shopping</div>
+<div class="text-sm mt-1">MIXXO（可退稅）/ I AM JOY（女人街）/ Aver Haus / KT&amp;G (close 9pm)</div>
+<div class="text-sm mt-1">Churro 101</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="鳳山精肉 봉산정육 晚餐 預約">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d2-dinner" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">19:00–20:30 晚餐：鳳山精肉 봉산정육（已預約 19:00）</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/봉산정육" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-pink-500 itinerary-item" data-keywords="人生四格 인생네컷 Snowing forest 甜品">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d2-dessert" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">餐後活動</div>
+<div class="text-sm mt-1">人生四格 인생네컷 / Snowing Forest 甜品</div>
+<a class="map-btn mt-2" href="https://naver.me/FvEIhol0" target="_blank">
+<i class="fa-solid fa-map"></i> Snowing Forest
               </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-sky-500 itinerary-item" data-keywords="Uber bus">
-          <div class="flex items-center gap-3">
-            <input class="check" type="checkbox" data-id="d1-transit2" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">17:00–18:00 交通</div>
-              <div class="text-sm mt-1 text-gray-700">Uber or bus</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-pink-500 itinerary-item" data-keywords="Color of you 色彩鑑定 弘大 LHM Color Test SHW T1 Base Camp">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d1-color" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">18:00–19:30 Color of You (已BOOK 18:00)</div>
-              <div class="text-sm mt-1 text-gray-700">LHM / Color Test 弘大</div>
-              <div class="text-xs muted mt-1">SHW / T1 Base Camp 亦在附近</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Color+of+you+Hongdae">
-                <i class="fa-solid fa-map"></i> 地圖
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Day 3 -->
+<section class="day-card" id="day3">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 3 · 9/3 (一) 景福宮 + 安國 + 益善洞</h2>
+<p class="text-sm muted mt-1">早餐拿位 → 景福宮韓屋村 → 益善洞仁寺洞 → 新村排骨晚餐</p>
+</div>
+<span class="pill">文化日</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Artist Bakery Dotori Garden 早餐 拿位">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d3-breakfast" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">08:00–09:30 早餐（需拿位）</div>
+<div class="text-sm mt-1">
+                Artist Bakery (open 7:30, Exit 1) / Dotori Garden (open 8:00)
+              </div>
+<div class="text-xs muted mt-1 bg-yellow-50 p-2 rounded">⚠️ 需提前到場拿號等位</div>
+<div class="flex gap-2 mt-2">
+<a class="map-btn" href="https://map.naver.com/p/search/아티스트베이커리 안국" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+<a class="map-btn" href="https://naver.me/GG7tzb6n" target="_blank">
+<i class="fa-solid fa-map"></i> Dotori Garden
+                </a>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="景福宮 北村韓屋村">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d3-palace" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">12:30–14:30 景福宮 &amp; 北村韓屋村</div>
+<a class="map-btn mt-2" href="https://www.google.com/maps/search/?api=1&amp;query=Gyeongbokgung+Palace" target="_blank">
+<i class="fa-solid fa-map"></i> 景福宮
               </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-green-500 itinerary-item" data-keywords="豬腳小姐 미쓰족발 雪冰 Sulbing 설빙">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d1-dinner" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">20:00–21:00 晚餐：豬腳小姐 미쓰족발</div>
-              <div class="text-sm mt-1 text-gray-700">甜品：雪冰 Sulbing / 설빙</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Myth+Jokbal+Hongdae">
-                <i class="fa-solid fa-map"></i> 豬腳小姐地圖
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="清潭門菜包肉 北村店 午餐 拿位">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d3-lunch" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">13:30–14:30 午餐：清潭門菜包肉 北村店（需拿位）</div>
+<div class="text-xs muted">⚠️ 2:30-4pm 店休時間</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/정담은보쌈 북촌점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="Oat coffee 益善洞 仁寺洞 Kokkiri Bagel Pipe Ground">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d3-ikseon" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">16:30–18:00 益善洞 &amp; 仁寺洞</div>
+<div class="text-sm mt-1">小食：Kokkiri Bagel / Pipe Ground | 甜品：Oat Coffee</div>
+<div class="text-xs muted">⚠️ 益善洞大部分店家 5pm 關門</div>
+<div class="flex gap-2 mt-2">
+<a class="map-btn" href="https://naver.me/xCBQllUs" target="_blank">
+<i class="fa-solid fa-map"></i> Kokkiri Bagel
+                </a>
+<a class="map-btn" href="https://map.naver.com/p/entry/place/1298744377" target="_blank">
+<i class="fa-solid fa-map"></i> Oat Coffee
+                </a>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="新村 辣奶油燉排骨 소신이쏘 晚餐 年糕冬粉">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d3-dinner" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">17:00–21:00 新村晚餐：辣奶油燉排骨 소신이쏘</div>
+<div class="text-sm mt-1">年糕冬粉可續 | 甜品：서울호떡 糖餅</div>
+<div class="flex gap-2 mt-2">
+<a class="map-btn" href="https://map.naver.com/p/search/소신이쏘 신촌본점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+<a class="map-btn" href="https://map.naver.com/p/entry/place/2045897924" target="_blank">
+<i class="fa-solid fa-map"></i> 糖餅
+                </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Day 4 -->
+<section class="day-card" id="day4">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 4 · 10/3 (二) 明洞 + 南山塔</h2>
+<p class="text-sm muted mt-1">早餐 → 南山塔纜車 → 明洞商圈購物</p>
+</div>
+<span class="pill">購物日</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Egg Drop Isaac toast Zero store kimbab 早餐">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d4-breakfast" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">08:30–09:00 早餐（弘大）</div>
+<div class="text-sm mt-1">紫菜包飯 / Egg Drop / Isaac Toast / Zero Store</div>
+<div class="flex gap-2 mt-2">
+<a class="map-btn" href="https://map.naver.com/p/search/에그드랍 홍대입구점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+<a class="map-btn" href="https://naver.me/G58gJTbY" target="_blank">
+<i class="fa-solid fa-map"></i> Isaac Toast
+                </a>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="南山纜車 南山塔 N Seoul Tower">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d4-namsan" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">10:00–11:30 南山纜車 + 南山塔</div>
+<div class="text-sm mt-1 muted">Bus 01a / 01b（約 30 分鐘）</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/남산케이블카" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="瑞源粥店 鮑魚粥 서울타워">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d4-lunch" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">12:00–13:00 午餐：瑞源粥店（鮑魚粥）</div>
+<div class="text-sm mt-1 muted">서울타워區域</div>
+<a class="map-btn mt-2 inline-flex" href="https://map.naver.com/p/search/서원죽집 명동" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a></div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="明洞 Daiso 樂天 Young Plaza Olive Young Cream chic Puradak chicken">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d4-myeongdong" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">13:00– 明洞大街 Shopping</div>
+<div class="text-sm mt-1">
+                Daiso (12層) / 樂天 Young Plaza / Olive Young<br/>
+                Cream Chic (cafe) / Puradak Chicken
+              </div>
+<div class="flex gap-2 mt-2">
+<a class="map-btn" href="https://map.naver.com/p/search/다이소 명동본점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+<a class="map-btn" href="https://map.naver.com/p/entry/place/1256999271" target="_blank">
+<i class="fa-solid fa-map"></i> Cream Chic
+                </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Day 5 -->
+<section class="day-card" id="day5">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 5 · 11/3 (三) 1 Day Tour（郊外）</h2>
+<p class="text-sm muted mt-1">草泥馬樂園 → 南怡島 → 江村鐵路自行車</p>
+</div>
+<span class="pill">一日遊</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-sky-500 itinerary-item" data-keywords="弘大站 上車 巴士">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d5-depart" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">07:00 去程：弘大站上車</div>
+<a class="map-btn mt-2 inline-flex" href="https://map.naver.com/p/search/홍대입구역" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a></div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="草泥馬樂園 Alpaca World">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d5-alpaca" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">10:00–12:00 草泥馬樂園 (Alpaca World)</div>
+<div class="text-sm mt-1 muted">巴士 2 小時</div>
+<a class="map-btn mt-2 inline-flex" href="https://map.naver.com/p/search/알파카월드" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a></div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="南怡島 午餐">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d5-nami" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">13:00–15:00 南怡島 + 午餐</div>
+<div class="text-sm mt-1 muted">含 1 小時午餐時間</div>
+<a class="map-btn mt-2 inline-flex" href="https://map.naver.com/p/search/남이섬" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a></div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="江村鐵路 自行車 主題公園">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d5-railbike" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">16:00–18:00 江村鐵路主題公園</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="宋家 馬鈴薯排骨湯 Parol ranggeu 粟米酥">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d5-dinner" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">19:30 回程：弘大站落車</div>
+<div class="font-bold mt-3">20:00–21:00 晚餐：宋家馬鈴薯排骨湯</div>
+<div class="text-sm mt-1">Parol &amp; ranggeu 粟米酥</div>
+<div class="flex gap-2 mt-2">
+<a class="map-btn" href="https://map.naver.com/p/search/송가네감자탕 본점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+<a class="map-btn" href="https://naver.me/GFB1lYmu" target="_blank">
+<i class="fa-solid fa-map"></i> Parol
+                </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Day 6 -->
+<section class="day-card" id="day6">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 6 · 12/3 (四) 東大門 + 馬場洞韓牛</h2>
+<p class="text-sm muted mt-1">廣藏市場 → 東大門商圈 → 馬場洞韓牛晚餐</p>
+</div>
+<span class="pill">吃爆日</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Mega Coffee issac toast Exit 8">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d6-breakfast" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">08:30 早餐：Mega Coffee / Isaac Toast</div>
+<div class="text-sm mt-1 muted">Exit 8</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="孔陵一隻雞">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d6-chicken" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">10:00–11:00 孔陵一隻雞</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/공릉닭한마리 동대문" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="廣藏市場 모녀김밥 麻藥飯捲 一號商會 姜家辣炒年糕">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d6-gwangjang" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">11:00–12:00 廣藏市場小食</div>
+<div class="text-sm mt-1">
+                모녀김밥 麻藥飯捲 (9am) / 一號商會冠軍咖啡 (10am) / 姜家辣炒年糕 (11am)
+              </div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="東大門 Hyundai DOOTA MALL DDP NyuNyu MIMILINE TEAM 204">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d6-ddm" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">12:30–17:00 東大門商圈</div>
+<div class="text-sm mt-1">
+                Hyundai / DOOTA MALL / DDP (16:00-16:30)<br/>
+                小食：Wagle Wagle Bake Shop (15:00-15:30)<br/>
+                逛街：MIMILINE / NyuNyu / TEAM 204 / APM Place（未開）/ No More Pizza
+              </div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/뉴뉴 동대문" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="馬場洞 韓牛 晚餐">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d6-hanwoo" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">17:00–17:50 Uber 前往馬場洞</div>
+<div class="font-bold mt-3">18:00–20:00 晚餐：馬場洞韓牛</div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/search/용문집 마장동" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Day 7 -->
+<section class="day-card" id="day7">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 7 · 13/3 (五) 聖水 + 江南</h2>
+<p class="text-sm muted mt-1">聖水洞潮流區 → 無垢屋人參雞 → London Bagel → 好族飯晚餐</p>
+</div>
+<span class="pill">潮流日</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Standard Bread 早餐">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d7-breakfast" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">09:00 早餐：Standard Bread</div>
+<div class="text-sm mt-1 muted">聖水 Exit 3</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="無垢屋 拿位 人參雞 10am 登記">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d7-register" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">10:00 無垢屋 10am 拿位/登記</div>
+<div class="text-xs muted bg-yellow-50 p-2 rounded mt-1">⚠️ Open 11:30，需提前登記</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="Newmix coffee etre bake house 蒜味鹽包 蒜蓉包 한정선">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d7-snack" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">11:30–12:30 聖水漫遊</div>
+<div class="text-sm mt-1">
+                Newmix Coffee（咖啡粉店）/ etre bake house（蒜味鹽包/蒜蓉包）/ 한정선 韓貞仙
+              </div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="無垢屋 人參雞 午餐">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d7-lunch" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">13:00–14:00 午餐：無垢屋人參雞</div>
+<div class="text-xs muted">10am 去拎位的餐廳</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="Market in U 二手店 Stand Oil emis nyu nyu London Bagel 拿位">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d7-shops" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">14:00–15:30 聖水購物 + London Bagel 拿位</div>
+<div class="text-sm mt-1">
+                Market in U（二手店）/ Stand Oil / emis / nyu nyu<br/>
+                Maman Gelato / se con daire 果醬 / Frolla (coffee &amp; cake)
+              </div>
+<a class="map-btn mt-2" href="https://map.naver.com/p/entry/place/1070113447" target="_blank">
+<i class="fa-solid fa-map"></i> Market in U
               </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="SPAO Olive Young Daiso 發熱衣">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d1-shop" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">21:00–22:00 弘大 Shopping</div>
-              <div class="text-sm mt-2 text-gray-700 space-y-1">
-                <div>🛍️ SPAO (close 22pm)</div>
-                <div>🛍️ Olive Young (close 23pm)</div>
-                <div>🛍️ Daiso 發熱衣 (close 22pm)</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="London Bagel Museum 狎鷗亭 島山店 江南">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d7-bagel" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">16:30–17:30 小食：London Bagel Museum</div>
+<div class="text-sm mt-1 muted">狎鷗亭 Exit 5 島山店（Uber 20 min）</div>
+<div class="text-sm mt-1">狎鷗亭區域</div>
+<a class="map-btn mt-2 inline-flex" href="https://map.naver.com/p/search/런던베이글뮤지엄 도산점" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a></div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="好族飯 醬油排骨 江南 晚餐">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d7-dinner" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">19:00–20:00 晚餐：好族飯（醬油排骨）</div>
+<a class="map-btn mt-2 inline-flex" href="https://map.naver.com/p/search/호족반 청담" target="_blank"><i class="fa-solid fa-map-location-dot mr-1"></i> Naver 地圖</a></div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-pink-500 itinerary-item" data-keywords="新沙洞 維也納咖啡 Aland milestone coffee 라헬의부엌 梳乎厘 Olive Young">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d7-dessert" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">餐後：新沙洞漫遊</div>
+<div class="text-sm mt-1">
+                維也納咖啡 / Aland / milestone coffee / Olive Young<br/>
+                甜品：라헬의부엌 梳乎厘 (close 9pm)
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-yellow-500 itinerary-item" data-keywords="橋村炸雞 교촌치킨 BHC 蜂蜜無骨 허니순살 芝士粉 醬油炸雞">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d1-chicken" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">22:15–23:00 宵夜：炸雞</div>
-              <div class="text-sm mt-1 text-gray-700">橋村炸雞 교촌치킨 / BHC?</div>
-              <div class="text-xs muted mt-1">蜂蜜無骨 허니순살 / 芝士粉 / 醬油炸雞</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 2 ==================== -->
-    <section class="day-card" id="day2">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-orange-50 to-white border-l-4 border-orange-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 2 · 8/3 (日) 延南洞 + 弘大</h2>
-            <p class="text-sm muted mt-1">吃 + 逛 | AK Plaza、義大利麵、弘大商圈</p>
-          </div>
-          <span class="pill bg-orange-100 text-orange-700 border-orange-200">Shopping</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Isaac Toast Zero store 早餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d2-isaac" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">09:00-10:00 早餐：Isaac Toast</div>
-              <div class="text-sm mt-1 text-gray-700">/ zero store (出門搭巴士06號10min/walk 20min)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="AK Plaza Waffle Shop 可退稅">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d2-ak" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">10:30-11:30 AK Plaza</div>
-              <div class="text-sm mt-1 text-gray-700">(地下的 Waffle Shop) | <span class="text-green-600 font-semibold">可退稅</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="CAMELLO yeonnam 카멜로연남 義大利麵 排隊 walk in">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d2-camello" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">12:00-13:00 CAMELLO yeonnam 카멜로연남</div>
-              <div class="text-xs text-red-500 mt-1 font-bold">⚠️ walk in only | *開門前要到</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-yellow-600 itinerary-item" data-keywords="Mandong Bakery 蒜蓉包 公明咖啡廳">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d2-bakery" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">13:00-14:00 Mandong Bakery 蒜蓉包</div>
-              <div class="text-sm mt-1 text-gray-700">公明咖啡廳 buff / back to Airbnb(?)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-pink-500 itinerary-item" data-keywords="弘大 MIXXO I AM JOY 女人街 Aver Haus churro 101 KTG 退稅">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d2-shop" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">14:30-15:30 弘大 Shopping</div>
-              <div class="text-sm mt-2 text-gray-700 space-y-1">
-                <div>🛍️ MIXXO (<span class="text-green-600 font-semibold">可退稅</span>)</div>
-                <div>🛍️ I AM JOY (女人街) / Aver Haus??</div>
-                <div>🛍️ churro 101</div>
-                <div>🛍️ KT&G (close 9pm)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="鳳山精肉 봉산정육 預約 晚餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d2-dinner" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">19:00-20:30 晚餐：鳳山精肉 봉산정육</div>
-              <div class="text-sm mt-1 text-blue-600 font-semibold">已BOOK 19:00</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Bongsan+Butcher+Hongdae">
-                <i class="fa-solid fa-map"></i> 地圖
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Day 8 -->
+<section class="day-card" id="day8">
+<div class="card p-4 mb-4">
+<div class="flex items-start justify-between gap-3">
+<div>
+<h2 class="text-xl font-extrabold">Day 8 · 14/3 (六) 回程日</h2>
+<p class="text-sm muted mt-1">最後衝刺 → 機場 → 退稅 → 伴手禮 → 回香港</p>
+</div>
+<span class="pill">返港</span>
+</div>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="宋家馬鈴薯排骨湯 早餐 Bagel Land Deep coffee">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d8-breakfast" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">08:30–09:30 早餐：宋家馬鈴薯排骨湯 연남본점</div>
+<div class="text-sm mt-1">or Bagel Land (08:30) / Deep Coffee</div>
+<a class="map-btn mt-2" href="https://naver.me/FW6hPdb4" target="_blank">
+<i class="fa-solid fa-map"></i> 宋家排骨湯
               </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-indigo-400 itinerary-item" data-keywords="人生四格 인생네컷 Snowing forest 甜品">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d2-night" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">飯後：弘大 Shopping & 甜品</div>
-              <div class="text-sm mt-1 text-gray-700">人生四格 인생네컷 / 甜品: Snowing forest</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 3 ==================== -->
-    <section class="day-card" id="day3">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-blue-50 to-white border-l-4 border-blue-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 3 · 9/3 (一) 景福宮 + 安國 + 益善洞</h2>
-            <p class="text-sm muted mt-1">文化日 | 韓屋村、拿飛排隊名店</p>
-          </div>
-          <span class="pill bg-blue-100 text-blue-700 border-blue-200">打卡日</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Artist Bakery Dotori Garden 拿飛 早餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d3-breakfast" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">08:00-09:30 早餐 (拿飛)</div>
-              <div class="text-sm mt-1 text-gray-700">
-                🥐 Artist Bakery (open 7:30 / Exit 1)<br/>
-                🐿️ Dotori Garden (open at 8)
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-yellow-500 itinerary-item" data-keywords="自然島 鹽可頌 자연도소금빵 9am 公明咖啡廳">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d8-bread" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">09:00–09:15 最後衝刺：自然島鹽可頌 자연도소금빵</div>
+<div class="text-sm mt-1 muted">Open 9am / 公明咖啡廳</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="Bagel Land 午餐 10:00">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d8-lunch" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">10:00–11:00 午餐：Bagel Land</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-red-600 itinerary-item" data-keywords="回 Airbnb 機場 UO631">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d8-airport" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">11:00 Back to Airbnb</div>
+<div class="font-bold mt-2">11:30–12:30 前往機場</div>
+<div class="text-sm mt-1 bg-red-50 p-2 rounded">⚠️ 回程航班 UO631 15:45 起飛，12:30 前必須到達</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-600 itinerary-item" data-keywords="退稅 Gate 28">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d8-tax" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">12:30–13:30 退稅（Gate 28）</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-emerald-600 itinerary-item" data-keywords="Fish Cake Goraesa Gate 15 魚糕">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d8-fishcake" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">✅ 買魚糕：Fish Cake Goraesa (Gate 15)</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-600 itinerary-item" data-keywords="서울호떡 糖餅 Paris Baguette 巴黎貝甜 Gate 30 奶油餅乾">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="d8-snacks" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">13:30–14:30 機場小食 &amp; 伴手禮</div>
+<div class="text-sm mt-1">
+                서울호떡 糖餅 / 奶油餅乾 (Gate 30) / Paris Baguette 巴黎貝甜
               </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="景福宮 北村韓屋村">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d3-gbg" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">12:30-14:30 景福宮 & 北村韓屋村</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Gyeongbokgung+Palace">
-                <i class="fa-solid fa-map"></i> 地圖
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-green-600 itinerary-item" data-keywords="清潭門菜包肉 北村店 拿飛 午餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d3-lunch" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">*13:30-14:30 午餐 (拿飛)：清潭門菜包肉 北村店</div>
-              <div class="text-xs text-red-500 mt-1 font-bold">⚠️ 2:30-4pm close</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="益善洞 仁寺洞 Kokkiri bagel Pipe Ground Oat coffee">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d3-iksun" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">16:30-18:00 益善洞 & 仁寺洞 (5pm end)</div>
-              <div class="text-sm mt-1 text-gray-700">
-                甜品：Oat coffee<br/>
-                小食：Kokkiri bagel / Pipe Ground
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-red-600 itinerary-item" data-keywords="新村 辣奶油燉排骨 소신이쏘 서울호떡 糖餅 土俗村蔘雞湯 海木鰻魚飯">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d3-dinner" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">17:00-21:00 晚餐 (新村 / 其他選項)</div>
-              <div class="text-sm mt-2 text-gray-700 space-y-1">
-                <div>🍲 <strong>新村辣奶油燉排骨 소신이쏘</strong> (年糕冬粉可以續)</div>
-                <div>🥞 甜品：서울호떡 糖餅</div>
-                <div class="border-t border-gray-100 my-2 pt-2">備用選項：土俗村蔘雞湯 (20:00 last order) / 海木鰻魚飯</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 4 ==================== -->
-    <section class="day-card" id="day4">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-purple-50 to-white border-l-4 border-purple-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 4 · 10/3 (二) 明洞 + 南山塔</h2>
-            <p class="text-sm muted mt-1">購物日 | 纜車、鮑魚粥、明洞掃貨</p>
-          </div>
-          <span class="pill bg-purple-100 text-purple-700 border-purple-200">Shopping</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Egg Drop Issac toast Zero store kimbab 紫菜包飯 早餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d4-breakfast" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">08:30-09:00 早餐</div>
-              <div class="text-sm mt-1 text-gray-700">kimbab 紫菜包飯 / 弘大 Egg Drop / Issac toast / Zero store</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="南山纜車 南山塔 bus 01a 01b">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d4-namsan" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">10:00-11:30 南山纜車 + 南山塔</div>
-              <div class="text-xs muted mt-1">交通：bus 01a/01b（30min）</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=N+Seoul+Tower">
-                <i class="fa-solid fa-map"></i> 地圖
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-emerald-500 itinerary-item" data-keywords="瑞源粥店 鮑魚粥 午餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d4-lunch" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">12:00-13:00 午餐：瑞源粥店 鮑魚粥</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-600 itinerary-item" data-keywords="明洞 Daiso Puradak chicken Cream chic 樂天Young Plaza">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d4-myeongdong" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">明洞大街 Shopping</div>
-              <div class="text-sm mt-2 text-gray-700 space-y-1">
-                <div>🛍️ Daiso (12層)</div>
-                <div>🛍️ 樂天Young Plaza</div>
-                <div>🍗 Puradak chicken?</div>
-                <div>☕ Cafe: Cream chic</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 5 ==================== -->
-    <section class="day-card" id="day5">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-emerald-50 to-white border-l-4 border-emerald-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 5 · 11/3 (三) 1 Day Tour（郊外）</h2>
-            <p class="text-sm muted mt-1">草泥馬樂園 + 南怡島 + 鐵道自行車</p>
-          </div>
-          <span class="pill bg-emerald-100 text-emerald-700 border-emerald-200">包車/巴士</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="弘大站上車">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d5-depart" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">07:00 集合出發</div>
-              <div class="text-sm mt-1 text-gray-700">去程 弘大站上車 (2 hrs bus)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-emerald-600 itinerary-item" data-keywords="草泥馬樂園 Alpaca World">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d5-alpaca" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">10:00-12:00 草泥馬樂園</div>
-              <div class="text-xs muted mt-1">12:00-13:00 (1 hrs bus)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-green-500 itinerary-item" data-keywords="南怡島 午餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d5-nami" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">13:00-15:00 南怡島</div>
-              <div class="text-sm mt-1 text-gray-700">含1小時午餐時間</div>
-              <div class="text-xs muted mt-1">15:30 (30min bus)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-yellow-500 itinerary-item" data-keywords="江村鐵路主題公園 鐵道自行車">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d5-bike" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">16:00-18:00 江村鐵路主題公園</div>
-              <div class="text-sm mt-1 text-gray-700">19:30 回程 弘大站落</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-orange-600 itinerary-item" data-keywords="Parol & ranggeu 粟米酥 宋家馬鈴薯排骨湯 晚餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d5-dinner" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">20:00-21:00 晚餐</div>
-              <div class="text-sm mt-1 text-gray-700">
-                🍲 宋家馬鈴薯排骨湯<br/>
-                🌽 Parol & ranggeu 粟米酥
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 6 ==================== -->
-    <section class="day-card" id="day6">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-teal-50 to-white border-l-4 border-teal-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 6 · 12/3 (四) 東大門 + 馬場洞韓牛</h2>
-            <p class="text-sm muted mt-1">吃爆日 | 孔陵一隻雞、廣藏市場、韓牛</p>
-          </div>
-          <span class="pill bg-teal-100 text-teal-700 border-teal-200">美食</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-orange-400 itinerary-item" data-keywords="孔陵一隻雞 早餐 午餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d6-chicken" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">10:00 孔陵一隻雞</div>
-              <div class="text-sm mt-1 text-gray-700">(早餐/午餐)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-green-600 itinerary-item" data-keywords="廣藏市場 麻藥飯捲 姜家辣炒年糕">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d6-market" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">11:00-13:30 廣藏市場</div>
-              <div class="text-sm mt-1 text-gray-700">麻藥飯捲、姜家辣炒年糕</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="東大門 DDP Hyundai NyuNyu Mimi line">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d6-ddm" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">14:00-18:00 東大門</div>
-              <div class="text-sm mt-2 text-gray-700 space-y-1">
-                <div>🏢 DDP</div>
-                <div>🏢 Hyundai City Outlet</div>
-                <div>💍 NyuNyu (飾品)</div>
-                <div>💍 Mimi line (飾品)</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-red-600 itinerary-item" data-keywords="馬場洞 韓牛 晚餐 龍門家">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d6-hanwoo" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">18:00-20:00 晚餐：馬場洞韓牛</div>
-              <div class="text-sm mt-1 text-gray-700">龍門家 (建議預約或早到)</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Majang+Hanwoo+Market">
-                <i class="fa-solid fa-map"></i> 地圖
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="東大門鞋城 鞋批發市場">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d6-shoes" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">20:30 東大門鞋城</div>
-              <div class="text-sm mt-1 text-gray-700">(鞋批發市場)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 7 ==================== -->
-    <section class="day-card" id="day7">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-indigo-50 to-white border-l-4 border-indigo-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 7 · 13/3 (五) 聖水 + 江南</h2>
-            <p class="text-sm muted mt-1">潮流日 | Pop-up 巡禮、Bagel、好族飯</p>
-          </div>
-          <span class="pill bg-indigo-100 text-indigo-700 border-indigo-200">潮流</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="Standard Bread 無垢屋 拿飛">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-bread" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">09:00-10:30 聖水：Standard Bread / 無垢屋</div>
-              <div class="text-xs text-red-500 mt-1 font-bold">⚠️ 需拿飛</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="聖水 Pop-up Dior Tamburins emis Stand oil fwee LCDC Ader error point of view">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-popup" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">10:30-14:00 聖水洞 Pop-up 巡禮</div>
-              <div class="text-sm mt-2 text-gray-700 space-y-1">
-                <div>✨ Dior, Tamburins, emis</div>
-                <div>✨ Stand oil, fwee</div>
-                <div>✨ LCDC, Ader error</div>
-                <div>✨ point of view</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-yellow-600 itinerary-item" data-keywords="London Bagel 島山 狎鷗亭 排隊">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-bagel" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">14:00-15:30 London Bagel</div>
-              <div class="text-sm mt-1 text-gray-700">島山店 (狎鷗亭)</div>
-              <div class="text-xs text-red-500 mt-1 font-bold">⚠️ 拿票後去行 Stand oil / emis</div>
-              <a class="map-btn mt-2" target="_blank" href="https://www.google.com/maps/search/?api=1&query=London+Bagel+Museum+Dosan">
-                <i class="fa-solid fa-map"></i> 地圖
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-pink-500 itinerary-item" data-keywords="Wiggle Wiggle 島山 Haus Dosan gentel monster">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-dosan" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">15:30-18:00 狎鷗亭 Shopping</div>
-              <div class="text-sm mt-1 text-gray-700">Wiggle Wiggle 島山 / Haus Dosan (gentel monster)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-emerald-600 itinerary-item" data-keywords="好族飯 醬油排骨 晚餐 江南">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-dinner" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">19:00-20:30 江南晚餐：好族飯</div>
-              <div class="text-sm mt-1 text-gray-700">(醬油排骨)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-400 itinerary-item" data-keywords="星空圖書館 Coex mall">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-coex" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">20:30 星空圖書館 Coex mall</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="橋村炸雞">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-chicken" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">宵夜：橋村炸雞</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="執喼">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d7-pack" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">執喼 🧳</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 8 ==================== -->
-    <section class="day-card" id="day8">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-red-50 to-white border-l-4 border-red-500">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold text-slate-800">Day 8 · 14/3 (六) 回程日</h2>
-            <p class="text-sm muted mt-1">最後衝刺 | 鹽可頌、機場退稅伴手禮</p>
-          </div>
-          <span class="pill bg-red-100 text-red-700 border-red-200">返港</span>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        <div class="card p-4 border-l-4 border-orange-500 itinerary-item" data-keywords="自然島 鹽可頌 早餐">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-salt" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">09:00-10:00 最後衝刺：自然島 鹽可頌</div>
-              <div class="text-sm mt-1 text-gray-700">(09:00 open)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="AREX 行李 check out 弘大">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-checkout" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">10:00-11:00 弘大拿行李 / Check out</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-indigo-600 itinerary-item" data-keywords="AREX 到機場 機場快線">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-transit" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">11:00-12:30 AREX 到機場</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-red-600 itinerary-item" data-keywords="抵達機場 UO631 15:45">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-arrive" />
-            <div class="flex-1">
-              <div class="font-bold text-lg text-red-600">12:30 必須到達機場</div>
-              <div class="text-sm mt-1 font-bold text-gray-800">15:45 UO631 出發</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 機場任務清單 -->
-        <div class="text-sm text-gray-500 font-bold ml-1 mt-6 mb-2">機場 Checklist ✈️</div>
-        
-        <div class="card p-4 border-l-4 border-yellow-500 itinerary-item" data-keywords="退稅 機場 Gate 28">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-tax" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ 退稅 (Gate 28)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-green-500 itinerary-item" data-keywords="魚糕 Goraesa Gate 15">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-fish" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ 買魚糕 (Gate 15 Goraesa)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-pink-500 itinerary-item" data-keywords="巴黎貝甜 奶油餅乾 Gate 30">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-cookie" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ 買奶油餅乾 (Gate 30 巴黎貝甜)</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="Olive young 免稅店">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-olive" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ Olive young / 免稅店</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-orange-400 itinerary-item" data-keywords="韓國大創 DAISO">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-daiso" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ 韓國大創 DAISO</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-400 itinerary-item" data-keywords="KAKAO FRIENDS">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-kakao" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ KAKAO FRIENDS</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-red-400 itinerary-item" data-keywords="Zanmang Loopy">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-loopy" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ Zanmang Loopy</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-emerald-400 itinerary-item" data-keywords="LINE FRIENDS">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-line" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ LINE FRIENDS</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-teal-400 itinerary-item" data-keywords="Baskin-Robbins">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-baskin" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ Baskin-Robbins</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-indigo-400 itinerary-item" data-keywords="Riot Games 英雄聯盟">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="d8-riot" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">✅ Riot Games (英雄聯盟)</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== DAY 9 (Notes) ==================== -->
-    <section class="day-card" id="day9">
-      <div class="card p-4 mb-4 bg-gradient-to-r from-gray-800 to-slate-700 border-l-4 border-gray-900 text-white">
-        <div class="flex items-start justify-between gap-3">
-          <div>
-            <h2 class="text-xl font-extrabold">實用筆記 Notes</h2>
-            <p class="text-sm text-gray-300 mt-1">退稅、氣候同行卡、動漫整理</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="space-y-3">
-        
-        <div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="WOWPASS SIM 卡 韓國門號 排隊 CatchTable">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="n-wowpass" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">📱 WOWPASS & 手機排隊</div>
-              <div class="text-sm mt-2 space-y-2">
-                <div><strong>1. 儲值：</strong>弘大 Exit 2 橘色機台插外幣現金，WOWPASS 即可當韓國簽帳卡用（大部分商店、餐廳、便利店可刷）</div>
-                <div><strong>2. 排隊神器：</strong>去 London Bagel、Dotori、無垢屋等名店，在門口 iPad 輸入你的 WOWPASS SIM 韓國門號（010 開頭），即可四處遊逛等候位簡訊通知！</div>
-                <div class="text-xs text-indigo-600 font-semibold">⚠️ 沒有韓國門號 = 無法使用 CatchTable 排隊系統，只能在門外等</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="退稅 tax refund 15000韓元">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="n-tax" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">💰 退稅筆記</div>
-              <div class="text-sm mt-2 space-y-1">
-                <div>✅ <strong>單筆滿 15,000 韓元</strong> 即可退</div>
-                <div>✅ 現場退稅：Olive Young, 大部分百貨（結帳給護照）</div>
-                <div>✅ 機場退稅：超過 75,000 需海關蓋章</div>
-                <div>✅ 飯店退稅：需向櫃檯索取退稅單（不可經訂房網付款）</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="動漫 IP 聖地 Animate 高達 一番賞 popup Kpop">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="n-ip" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">🎮 動漫 IP 聖地</div>
-              <div class="text-sm mt-2 space-y-1">
-                <div>✨ <strong>弘大 AK Plaza (5F):</strong> Animate, 高達, 一番賞</div>
-                <div>✨ <strong>聖水洞:</strong> 隨時有 Popup (出發前查 IG #성수팝업)</div>
-                <div>✨ <strong>明洞地下街:</strong> K-pop 周邊與小雜貨</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="關門時間 close 營業時間">
-          <div class="flex items-start gap-3">
-            <input class="check mt-1" type="checkbox" data-id="n-close" />
-            <div class="flex-1">
-              <div class="font-bold text-lg">⏰ 關門時間提醒</div>
-              <div class="text-sm mt-2 space-y-1">
-                <div>• SPAO: 22:00</div>
-                <div>• Olive Young 弘大: 23:00</div>
-                <div>• Daiso 弘大: 22:00</div>
-                <div>• KT&G: 21:00</div>
-                <div>• 清潭門菜包肉 (北村): 14:30-16:00 休息</div>
-                <div>• 益善洞/仁寺洞: 大多 17:00 結束</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Bottom Action Bar -->
-  <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 p-3 pb-safe z-40">
-    <div class="max-w-4xl mx-auto flex items-center justify-between">
-      <div class="text-xs text-gray-500 font-medium ml-2">
-        <i class="fa-solid fa-check-circle text-green-500 mr-1"></i>行程會自動儲存
-      </div>
-      <button class="bg-slate-800 text-white px-4 py-2 rounded-full text-sm font-bold shadow-md active:scale-95 transition-transform" onclick="scrollToTop()">
-        <i class="fa-solid fa-arrow-up mr-1"></i> Top
-      </button>
-    </div>
-  </div>
-
-  <script>
-    // --- Tabs Switching ---
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-slate-600 itinerary-item" data-keywords="上機 UO631 15:45">
+<div class="flex items-center gap-3">
+<input class="check" data-id="d8-boarding" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold">15:00 上機</div>
+<div class="text-sm mt-1">UO631 15:45 → 19:00 (HKG)</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Notes -->
+<section class="day-card" id="notes">
+<div class="card p-4 mb-4">
+<h2 class="text-xl font-extrabold">Notes · 實用資訊 &amp; 提醒</h2>
+<p class="text-sm muted mt-1">退稅、動漫 IP、購物、注意事項</p>
+</div>
+<div class="space-y-3">
+<div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="WOWPASS SIM 卡 韓國門號 排隊 CatchTable">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-wowpass" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">📱 WOWPASS &amp; 手機排隊</div>
+<div class="text-sm mt-2 space-y-2">
+<div><strong>1. 儲值：</strong>弘大 Exit 2 橘色機台插外幣現金，WOWPASS 即可當韓國簽帳卡用（大部分商店、餐廳、便利店可刷）</div>
+<div><strong>2. 排隊神器：</strong>去 London Bagel、Dotori、無垢屋等名店，在門口 iPad 輸入你的 WOWPASS SIM 韓國門號（010 開頭），即可四處遊逛等候位簡訊通知！</div>
+<div class="text-xs text-indigo-600 font-semibold">⚠️ 沒有韓國門號 = 無法使用 CatchTable 排隊系統，只能在門外等</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-indigo-500 itinerary-item" data-keywords="WOWPASS SIM 卡 韓國門號 排隊 CatchTable">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-wowpass" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">📱 WOWPASS &amp; 手機排隊</div>
+<div class="text-sm mt-2 space-y-2">
+<div><strong>1. 儲值：</strong>弘大 Exit 2 橘色機台插外幣現金，WOWPASS 即可當韓國簽帳卡用（大部分商店、餐厅、便利店可刷）</div>
+<div><strong>2. 排隊神器：</strong>去 London Bagel、Dotori、無垢屋等名店，在門口 iPad 輸入你的 WOWPASS SIM 韓國門號（010 開頭），即可四處遊逛等候位簡訊通知！</div>
+<div class="text-xs text-indigo-600 font-semibold">⚠️ 沒有韓國門號 = 無法使用 CatchTable 排隊系統，只能在門外等</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-blue-500 itinerary-item" data-keywords="退稅 tax refund 15000韓元 75000韓元 現場退稅 機場退稅">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-tax" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">💰 退稅筆記</div>
+<div class="text-sm mt-2 space-y-1">
+<div>✅ <strong>單筆滿 15,000 韓元</strong>即可退稅</div>
+<div>✅ <strong>現場退稅</strong>：Olive Young / 大部分百貨（需出示護照）</div>
+<div>✅ <strong>機場退稅</strong>：超過 75,000 需海關蓋章</div>
+<div>✅ <strong>飯店退稅</strong>：需向櫃檯索取退稅單（不可經訂房網付款）</div>
+<div>✅ 退稅比率約 3%-7%</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-purple-500 itinerary-item" data-keywords="動漫 IP animate 高達 Gundam popup 聖水 pop-up AK Plaza">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-anime" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">🎮 動漫 / IP 聖地</div>
+<div class="text-sm mt-2 space-y-2">
+<div>
+<strong>弘大 AK PLAZA (5F)：</strong><br/>
+                  Animate KOREA 總店、高達模型、一番賞、任天堂<br/>
+                  被稱為「韓國版秋葉原」
+                </div>
+<div>
+<strong>聖水洞：</strong><br/>
+                  韓國最多 IP Pop-up Store 的地方！<br/>
+                  建議出發前搜尋 IG：<span class="kbd">#성수팝업</span>（聖水快閃）
+                </div>
+<div>
+<strong>明洞地下街：</strong><br/>
+                  K-pop 周邊、韓國/日本 IP 小雜貨、貼紙、鎖匙扣
+                </div>
+<div>
+<strong>KT&amp;G 想像庭院 (弘大)：</strong><br/>
+                  韓國本土原創 IP、插畫師設計文具 (Dinotaeng、Joguman 等)
+                </div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-yellow-500 itinerary-item" data-keywords="氣候同行卡 仁川機場站 AREX 上車限制">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-climate" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">🌿 氣候同行卡提醒</div>
+<div class="text-sm mt-2 space-y-1">
+<div>⚠️ 一般規則：仁川機場站<strong>不允許用氣候同行卡「上車」</strong>進市區</div>
+<div>✅ 需要另買 AREX 票 / 機場巴士等進市區</div>
+<div>✅ 回程「下車」規則請以實際站務公告為準</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-green-500 itinerary-item" data-keywords="預約 booking 餐廳 Color of you 鳳山精肉">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-booking" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">📅 已預約項目提醒</div>
+<div class="text-sm mt-2 space-y-1">
+<div>✅ Day 1 18:00 - Color of you 弘大</div>
+<div>✅ Day 2 19:00 - 鳳山精肉</div>
+<div>⚠️ 其他需「拿位/提前到場」的餐廳請參考各天行程</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-pink-500 itinerary-item" data-keywords="拿位 等位 開門前 Artist Bakery Dotori Garden CAMELLO 無垢屋 清潭門">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-queue" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">⏰ 需提前拿位餐廳</div>
+<div class="text-sm mt-2 space-y-1">
+<div><strong>Day 3：</strong>Artist Bakery (7:30) / Dotori Garden (8:00) / 清潭門 (2:30-4pm 店休)</div>
+<div><strong>Day 2：</strong>CAMELLO yeonnam（開門前到達排隊，walk in only）</div>
+<div><strong>Day 7：</strong>無垢屋（10am 拿位/登記，11:30 開門）</div>
+</div>
+</div>
+</div>
+</div>
+<div class="card p-4 border-l-4 border-red-500 itinerary-item" data-keywords="關門時間 close 營業時間">
+<div class="flex items-start gap-3">
+<input class="check mt-1" data-id="n-hours" type="checkbox"/>
+<div class="flex-1">
+<div class="font-bold text-lg">🕐 重要營業時間</div>
+<div class="text-sm mt-2 space-y-1">
+<div>• SPAO / Daiso - close 22:00</div>
+<div>• Olive Young - close 23:00</div>
+<div>• KT&amp;G - close 21:00</div>
+<div>• 益善洞大部分店家 - 17:00 關門</div>
+<div>• 라헬의부엌 梳乎厘 - close 21:00</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur border-t z-40">
+<div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between text-sm">
+<div class="muted flex items-center gap-2">
+<i class="fa-solid fa-circle-info"></i>
+<span class="hidden sm:inline">用搜尋快速找：退稅 / Bagel / Gundam / Pop-up</span>
+<span class="sm:hidden">搜尋快速定位</span>
+</div>
+<button class="copy-btn" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i> Top</button>
+</div>
+</div>
+<script>
+    // Tabs
     const tabs = document.querySelectorAll(".tab");
     const dayCards = document.querySelectorAll(".day-card");
 
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("tab-active", "bg-indigo-50"));
-        dayCards.forEach(card => card.classList.remove("active"));
-        
+        tabs.forEach(t => t.classList.remove("tab-active"));
         tab.classList.add("tab-active");
-        if (tab.dataset.target === 'day9') tab.classList.add("bg-indigo-50");
-        
-        document.getElementById(tab.dataset.target).classList.add("active");
-        
+        const target = tab.dataset.target;
+        dayCards.forEach(card => card.classList.toggle("active", card.id === target));
         applySearch(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
       });
     });
 
-    // --- Copy Helper ---
+    // Copy helper
     function copyText(id) {
       const el = document.getElementById(id);
       const text = el ? el.innerText : "";
       navigator.clipboard.writeText(text).then(() => {
-        toast("已複製到剪貼簿！");
+        toast("已複製 ✓");
       }).catch(() => {
-        alert("複製失敗，請長按手動複製");
+        alert("複製失敗，請手動複製");
       });
     }
 
-    // --- Checklist Memory (localStorage) ---
-    const STORE_KEY = "seoul2026_checklist_v1";
+    // Checklist persistence
+    const STORE_KEY = "seoul2026_checklist_v2";
 
     function loadState() {
       try { return JSON.parse(localStorage.getItem(STORE_KEY) || "{}"); }
@@ -1085,24 +1013,23 @@
     }
 
     function toggleDoneClass(cb) {
-      const wrapper = cb.closest(".itinerary-item");
+      const wrapper = cb.closest(".itinerary-item") || cb.closest(".card");
       if (!wrapper) return;
       if (cb.checked) wrapper.classList.add("done");
       else wrapper.classList.remove("done");
     }
 
     function resetAll() {
-      if(confirm("確定要清除所有打勾紀錄嗎？")) {
-        localStorage.removeItem(STORE_KEY);
-        document.querySelectorAll("input[type='checkbox'][data-id]").forEach(cb => {
-          cb.checked = false;
-          toggleDoneClass(cb);
-        });
-        toast("已清除所有進度");
-      }
+      if (!confirm("確定清除所有勾選記錄嗎？")) return;
+      localStorage.removeItem(STORE_KEY);
+      document.querySelectorAll("input[type='checkbox'][data-id]").forEach(cb => {
+        cb.checked = false;
+        toggleDoneClass(cb);
+      });
+      toast("已清除所有勾選 ✓");
     }
 
-    // --- Search Filter ---
+    // Search filter (only within active day)
     function applySearch(silent=false) {
       const q = (document.getElementById("searchBox").value || "").trim().toLowerCase();
       const active = document.querySelector(".day-card.active");
@@ -1110,7 +1037,6 @@
 
       const items = active.querySelectorAll(".itinerary-item");
       let visibleCount = 0;
-      
       items.forEach(item => {
         const keywords = (item.dataset.keywords || "").toLowerCase();
         const text = item.innerText.toLowerCase();
@@ -1124,7 +1050,7 @@
       }
     }
 
-    // --- Simple Toast Notification ---
+    // Simple toast
     let toastTimer;
     function toast(msg) {
       clearTimeout(toastTimer);
@@ -1132,7 +1058,7 @@
       if (!el) {
         el = document.createElement("div");
         el.id = "toast";
-        el.className = "fixed left-1/2 -translate-x-1/2 bottom-24 bg-black text-white text-sm px-4 py-2 rounded-full shadow-lg opacity-0 transition-opacity duration-200 z-50 whitespace-nowrap";
+        el.className = "fixed left-1/2 -translate-x-1/2 bottom-20 bg-black text-white text-sm px-4 py-2 rounded-full shadow-lg opacity-0 transition-opacity duration-200 z-50";
         document.body.appendChild(el);
       }
       el.textContent = msg;
@@ -1144,16 +1070,22 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // ===== 加入 Edit / Save 外掛功能 =====
+    // Init
+    bindChecklist();
+
+        // ===== 加入 Edit / Save 外掛功能 =====
     const EDIT_STORE_KEY = "seoul2026_edits_v1";
     let isEditing = false;
 
-    const editables = document.querySelectorAll('.text-lg, .font-bold:not(.mini), .text-sm:not(.muted), .text-xs.muted:not(.bg-yellow-50)');
+    // 1. 自動抓取所有可編輯的文字（時間、標題、備註），並給予唯一 ID
+    const editables = document.querySelectorAll('.time-badge, .flex-1 .font-bold, .flex-1 .text-sm, .flex-1 .text-xs');
     editables.forEach((el, index) => {
-      if(el.tagName === 'A' || el.tagName === 'BUTTON' || el.tagName === 'H2' || el.closest('header')) return;
+      // 避開按鈕或連結，以免版面跑版
+      if(el.tagName === 'A' || el.tagName === 'BUTTON') return;
       el.dataset.editId = "edit_node_" + index;
     });
 
+    // 2. 啟動時：從瀏覽器讀取之前儲存的修改
     function loadEdits() {
       try {
         const saved = JSON.parse(localStorage.getItem(EDIT_STORE_KEY) || "{}");
@@ -1165,24 +1097,27 @@
       } catch (e) { console.error("無法讀取修改紀錄"); }
     }
 
+    // 3. 切換編輯模式與儲存
     function toggleEditMode() {
       isEditing = !isEditing;
       const btn = document.getElementById('edit-toggle-btn');
       
       if (isEditing) {
-        btn.innerHTML = '<i class="fa-solid fa-floppy-disk text-white"></i> <span class="text-white">儲存修改</span>';
+        // 進入編輯模式
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> 儲存修改';
         btn.classList.replace('bg-white/20', 'bg-red-500');
         
         editables.forEach(el => {
           if (!el.dataset.editId) return;
           el.contentEditable = "true";
-          el.style.border = "1px dashed #ff4d4d";
+          el.style.border = "1px dashed #ff4d4d"; // 加個紅虛線框讓你知道哪裡可以改
           el.style.padding = "2px";
           el.style.borderRadius = "4px";
           el.style.minHeight = "1em";
         });
         toast("進入編輯模式：請點擊紅框文字進行修改");
       } else {
+        // 儲存並退出編輯模式
         btn.innerHTML = '<i class="fa-solid fa-pen"></i> 編輯行程';
         btn.classList.replace('bg-red-500', 'bg-white/20');
         
@@ -1200,18 +1135,22 @@
       }
     }
 
+    // 4. 在畫面右上角自動生成一顆「編輯按鈕」
     const headerDiv = document.querySelector('header .text-right');
     if (headerDiv) {
       const editBtn = document.createElement('button');
       editBtn.id = 'edit-toggle-btn';
-      editBtn.className = 'bg-white/20 text-white text-xs px-2 py-1.5 rounded mt-2 transition-colors font-bold shadow-sm backdrop-blur-sm border border-white/10';
+      editBtn.className = 'bg-white/20 text-white text-xs px-2 py-1 rounded mt-2 ml-2 transition-colors';
       editBtn.innerHTML = '<i class="fa-solid fa-pen"></i> 編輯行程';
       editBtn.onclick = toggleEditMode;
       headerDiv.appendChild(editBtn);
     }
 
-    bindChecklist();
+    // 執行讀取
     loadEdits();
+    // =====================================
+
+    
   </script>
 </body>
 </html>
